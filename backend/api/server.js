@@ -7,6 +7,7 @@ dotenv.config();
 const stripe = Stripe(process.env.STRIPE_API);
 
 export default async function handler(req, res) {
+    console.log("Testing");
     // Enable CORS by allowing the frontend to access this backend
     res.setHeader('Access-Control-Allow-Origin', '*');  // Allow all origins or specify your frontend URL
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
