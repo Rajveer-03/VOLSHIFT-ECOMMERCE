@@ -1,6 +1,6 @@
-
 // cart
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
 const updateCartSummary = () => {
     const cartItemsList = document.getElementById("cart-items");
     if (cartItemsList) {
@@ -14,8 +14,8 @@ const updateCartSummary = () => {
             totalAmount += item.quantity * item.price;
 
             const listItem = document.createElement("li");
-            listItem.innerHTML = `
-                <img src="${item.image}" alt="${item.name}" width="${200}" height="${200}"   class="cart-item-image">
+            listItem.innerHTML = ` 
+                <img src="${item.image}" alt="${item.name}" width="${200}" height="${200}" class="cart-item-image">
                 <span>${item.name} (x${item.quantity}) - $${(item.quantity * item.price).toFixed(2)}</span>
                 <button class="remove-from-cart" data-id="${item.id}">REMOVE</button>
             `;
@@ -53,7 +53,6 @@ const removeFromCart = (productId) => {
     localStorage.setItem('cart', JSON.stringify(cart));
     updateCartSummary();
 
-
     const productCard = document.querySelector(`.product-card[data-id="${productId}"]`);
     if (productCard) {
         const addToCartButton = productCard.querySelector(".add-to-cart");
@@ -82,9 +81,6 @@ document.querySelectorAll(".add-to-cart").forEach(button => {
 
 document.addEventListener("DOMContentLoaded", updateCartSummary);
 
-// quantity in cart
-
-
 // Checkout function to send cart data to the server
 const checkout = async () => {
     console.log("Rajveer");
@@ -109,6 +105,8 @@ const checkout = async () => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',  // Set CORS header to allow cross-origin request
+                'Access-Control-Allow-Methods': 'POST', // Allow only POST requests
             },
             body: JSON.stringify({ items: cartItems })
         });
@@ -127,5 +125,6 @@ const checkout = async () => {
         
     } catch (error) {
         console.error('Checkout error:', error);
+        alert('An error occurred during checkout. Please try again.');
     }
 };
