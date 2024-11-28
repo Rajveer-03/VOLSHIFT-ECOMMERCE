@@ -101,9 +101,6 @@ const checkout = async () => {
     // Send cart items to the server
     const response = await fetch(baseUrl, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
       body: JSON.stringify({ items: cartItems }),
     });
 
