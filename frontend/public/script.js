@@ -96,7 +96,7 @@ const checkout = async () => {
     // Determine the base URL for the backend depending on the environment
     const baseUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
         ? 'http://localhost:3000/api/stripe-checkout'  // Local development URL
-        : 'https://your-deployed-backend-url.com/api/stripe-checkout';  // Deployed backend URL
+        : 'https://volshift-ecommerce-mpy5.vercel.app/api/stripe-checkout';  // Deployed backend URL
 
     try {
         // Send cart items to the server
