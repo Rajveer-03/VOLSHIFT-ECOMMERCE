@@ -81,50 +81,81 @@ document.querySelectorAll(".add-to-cart").forEach(button => {
 
 document.addEventListener("DOMContentLoaded", updateCartSummary);
 
+// cart
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
 // Checkout function to send cart data to the server
 const checkout = async () => {
-    console.log("Rajveer");
+  // Map cart items for the request
+  const cartItems = cart.map(item => ({
+    name: item.name,
+    price: item.price, // Price as a number
+    quantity: item.quantity,
+    image: item.image, // Image URL
+  }));
 
-    // Map cart items for the request
-    const cartItems = cart.map(item => ({
-        name: item.name,
-        price: item.price,  // Price as a number
-        quantity: item.quantity,
-        image: item.image  // Image URL
-    }));
+  // Determine backend URL based on environment
+  const baseUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:3000/api/stripe-checkout' // Local backend URL
+    : 'https://volshift-ecommerce-mpy5.vercel.app/api/stripe-checkout'; // Deployed backend URL
 
-    // Determine the base URL for the backend depending on the environment
-    const baseUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-        ? 'http://localhost:3000/api/stripe-checkout'  // Local development URL
-        : 'https://volshift-ecommerce-mpy5.vercel.app/api/stripe-checkout';  // Deployed backend URL
+  try {
+    // Send cart items to the server
+    const response = await fetch(baseUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ items: cartItems }),
+    });
 
-    try {
-        // Send cart items to the server
-        console.log(baseUrl);
-        const response = await fetch(baseUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',  // Set CORS header to allow cross-origin request
-                'Access-Control-Allow-Methods': '*', // Allow only POST requests
-            },
-            body: JSON.stringify({ items: cartItems })
-        });
+    const data = await response.json();
 
-        const data = await response.json();
-        console.log(data);
-        
-        // If session URL is returned, redirect to Stripe Checkout
-        if (data.url) {
-            console.log(cartItems);
-            window.location.href = data.url; // Redirect to Stripe Checkout
-        } else {
-            console.error('Error:', data.error);
-            alert('Checkout session could not be created.');
-        }
-        
-    } catch (error) {
-        console.error('Checkout error:', error);
-        alert('An error occurred during checkout. Please try again.');
+    // Redirect to Stripe Checkout if session URL is returned
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      console.error('Error:', data.error);
+      alert('Checkout session could not be created.');
     }
+  } catch (error) {
+    console.error('Checkout error:', error);
+    alert('An error occurred during checkout. Please try again.');
+  }
 };
+
+// Update cart summary function
+const updateCartSummary = () => {
+  const cartItemsList = document.getElementById('cart-items');
+  if (cartItemsList) {
+    cartItemsList.innerHTML = '';
+
+    let totalItems = 0;
+    let totalAmount = 0;
+
+    cart.forEach(item => {
+      totalItems += item.quantity;
+      totalAmount += item.quantity * item.price;
+
+      const listItem = document.createElement('li');
+      listItem.innerHTML = `
+        <img src="${item.image}" alt="${item.name}" width="200" height="200" class="cart-item-image">
+        <span>${item.name} (x${item.quantity}) - $${(item.quantity * item.price).toFixed(2)}</span>
+        <button class="remove-from-cart" data-id="${item.id}">REMOVE</button>
+      `;
+      cartItemsList.appendChild(listItem);
+    });
+
+    document.getElementById('total-items').textContent = totalItems;
+    document.getElementById('total-amount').textContent = totalAmount.toFixed(2);
+
+    document.querySelectorAll('.remove-from-cart').forEach(button => {
+      button.addEventListener('click', function () {
+        const productId = this.getAttribute('data-id');
+        removeFromCart(productId);
+      });
+    });
+  }
+};
+
+// Add and remove cart functions remain unchanged
