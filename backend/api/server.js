@@ -3,12 +3,23 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+// Initialize Stripe with the secret API key from environment variables
 const stripe = Stripe(process.env.STRIPE_API);
 
 export default async function handler(req, res) {
+    // Enable CORS by allowing the frontend to access this backend
+    res.setHeader('Access-Control-Allow-Origin', '*');  // Allow all origins or specify your frontend URL
+    res.setHeader('Access-Control-Allow-Methods', 'POST');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();  // Handle preflight OPTIONS request
+    }
+
     if (req.method === 'POST') {
         const { items } = req.body;
 
+        // Map cart items to Stripe line items format
         const lineItems = items.map(item => {
             const unitAmount = Math.round(item.price * 100); // Convert price to cents
             return {
@@ -25,6 +36,7 @@ export default async function handler(req, res) {
         });
 
         try {
+            // Create Stripe Checkout session
             const session = await stripe.checkout.sessions.create({
                 payment_method_types: ['card'],
                 line_items: lineItems,
@@ -34,7 +46,8 @@ export default async function handler(req, res) {
                 billing_address_collection: 'required',
             });
 
-            res.json({ url: session.url });
+            // Send the session URL to the frontend
+            res.status(200).json({ url: session.url });
         } catch (error) {
             console.error('Stripe Checkout error:', error);
             res.status(500).json({ error: 'Failed to create checkout session' });
