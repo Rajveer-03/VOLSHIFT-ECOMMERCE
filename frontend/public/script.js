@@ -104,6 +104,7 @@ const checkout = async () => {
 
     try {
         // Send cart items to the server
+        console.log(baseUrl);
         const response = await fetch(baseUrl, {
             method: 'POST',
             headers: {
