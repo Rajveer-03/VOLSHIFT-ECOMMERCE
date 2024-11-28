@@ -9,13 +9,15 @@ const stripe = Stripe(process.env.STRIPE_API);
 export default async function handler(req, res) {
     // Enable CORS by allowing the frontend to access this backend
     res.setHeader('Access-Control-Allow-Origin', '*');  // Allow all origins or specify your frontend URL
-    res.setHeader('Access-Control-Allow-Methods', 'POST');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
+    // Handle preflight OPTIONS request
     if (req.method === 'OPTIONS') {
-        return res.status(200).end();  // Handle preflight OPTIONS request
+        return res.status(200).end();
     }
 
+    // Handle POST request to create the Stripe Checkout session
     if (req.method === 'POST') {
         const { items } = req.body;
 
