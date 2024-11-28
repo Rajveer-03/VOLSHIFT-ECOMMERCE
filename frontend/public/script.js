@@ -81,8 +81,6 @@ document.querySelectorAll(".add-to-cart").forEach(button => {
 
 document.addEventListener("DOMContentLoaded", updateCartSummary);
 
-// cart
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 // Checkout function to send cart data to the server
 const checkout = async () => {
@@ -123,39 +121,3 @@ const checkout = async () => {
     alert('An error occurred during checkout. Please try again.');
   }
 };
-
-// Update cart summary function
-const updateCartSummary = () => {
-  const cartItemsList = document.getElementById('cart-items');
-  if (cartItemsList) {
-    cartItemsList.innerHTML = '';
-
-    let totalItems = 0;
-    let totalAmount = 0;
-
-    cart.forEach(item => {
-      totalItems += item.quantity;
-      totalAmount += item.quantity * item.price;
-
-      const listItem = document.createElement('li');
-      listItem.innerHTML = `
-        <img src="${item.image}" alt="${item.name}" width="200" height="200" class="cart-item-image">
-        <span>${item.name} (x${item.quantity}) - $${(item.quantity * item.price).toFixed(2)}</span>
-        <button class="remove-from-cart" data-id="${item.id}">REMOVE</button>
-      `;
-      cartItemsList.appendChild(listItem);
-    });
-
-    document.getElementById('total-items').textContent = totalItems;
-    document.getElementById('total-amount').textContent = totalAmount.toFixed(2);
-
-    document.querySelectorAll('.remove-from-cart').forEach(button => {
-      button.addEventListener('click', function () {
-        const productId = this.getAttribute('data-id');
-        removeFromCart(productId);
-      });
-    });
-  }
-};
-
-// Add and remove cart functions remain unchanged
