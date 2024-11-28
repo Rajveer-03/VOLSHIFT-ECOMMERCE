@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <h1>Admin Panel</h1>
+    <button id="logoutButton">Logout</button>
+
+<div class="admin-panel">
+    <h2>Product Management</h2>
+    <form id="product-form">
+        <label for="product-name">Product Name:</label>
+        <input type="text" id="product-name" name="product-name" required><br>
+
+        <label for="product-price">Price:</label>
+        <input type="number" id="product-price" name="product-price" required><br>
+
+        <label for="product-image-upload">Upload Product Image:</label>
+        <input type="file" id="product-image-upload" accept="image/*"><br>
+
+        <img id="image-preview" src="" alt="Image Preview" style="display:none; width: 200px; height: 200px;"><br>
+
+        <button type="submit">Save Product</button>
+    </form>
+</div>
+
+
+    <h2>Products</h2>
+    <div id="product-list"></div>
+    <script src="admin-panel.js"></script>
+</body>
+</html>

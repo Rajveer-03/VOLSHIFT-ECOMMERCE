@@ -1,0 +1,21 @@
+{
+  "name": "volshift-ecommerce",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "dependencies": {
+    "corepack": "^0.29.4",
+    "dotenv": "^16.4.5",
+    "express.js": "^1.0.0",
+    "nodemon": "^3.1.7",
+    "npm": "^10.9.0",
+    "stripe": "^17.3.1"
+  },
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

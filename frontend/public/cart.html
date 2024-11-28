@@ -1,0 +1,45 @@
+<!-- cart.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="cart-summary">
+        <h3>Cart Summary</h3>
+        <ul id="cart-items">
+            <!-- Sample Cart Item -->
+            <li>
+                <span>Product Name x2 - $200</span>
+
+            </li>
+            <!-- Add other cart items here dynamically -->
+        </ul>
+        <p>Total Items: <span id="total-items">2</span></p>
+        <p>Total Amount: $<span id="total-amount">400.00</span></p>
+        <button id="checkout" type="button" onclick="checkout()">Checkout</button>
+        <button id="go-back" type="button">Go Back</button>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+// Add this code for the Go Back button event
+const goBackButton = document.getElementById('go-back');
+
+if (goBackButton) {
+    goBackButton.addEventListener('click', function() {
+        // Try using history.back(), if that doesn't work, use document.referrer
+        if (document.referrer && document.referrer !== window.location.href) {
+            window.location.href = document.referrer;  // Go back to the referring page
+        } else {
+            window.history.back();  // Go back to the previous page
+        }
+    });
+}
+
+    </script>
+</body>
+</html>
