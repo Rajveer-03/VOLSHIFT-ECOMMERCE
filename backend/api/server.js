@@ -12,7 +12,7 @@ const app = express();
 
 // Use CORS middleware to handle cross-origin requests
 const corsOptions = {
-  origin: '*', // Allow all origins or specify frontend URLs like: ['https://yourfrontend.com']
+  origin: 'https://volshift-ecommerce-ten.vercel.app/cart.html', // Allow all origins or specify frontend URLs like: ['https://yourfrontend.com']
   credentials: true, // Allow cookies and authorization headers
   methods: ['GET', 'POST', 'OPTIONS'], // Allowed HTTP methods
   allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
