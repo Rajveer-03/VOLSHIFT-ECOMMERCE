@@ -106,7 +106,7 @@ const checkout = async () => {
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',  // Set CORS header to allow cross-origin request
-                'Access-Control-Allow-Methods': 'POST', // Allow only POST requests
+                'Access-Control-Allow-Methods': '*', // Allow only POST requests
             },
             body: JSON.stringify({ items: cartItems })
         });
