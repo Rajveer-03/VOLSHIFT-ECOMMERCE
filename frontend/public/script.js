@@ -98,10 +98,11 @@ const checkout = async () => {
     : 'https://volshift-ecommerce-mpy5.vercel.app/api/stripe-checkout'; // Deployed backend URL
 
     console.log(baseUrl);
+    console.log(cartItems);
   try {
     // Send cart items to the server
     const response = await fetch(baseUrl, {
-      method: 'GET',
+      method: 'POST',
       body: JSON.stringify({ items: cartItems }),
     });
 
