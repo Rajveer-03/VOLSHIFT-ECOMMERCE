@@ -20,8 +20,8 @@ app.get('/', (req, res) => {
 
 // Example route for stripe checkout
 app.post('/api/stripe-checkout', async (req, res) => {
-  const { items } = req.body;
   console.log("Hello");
+  const { items } = req.body;
   const lineItems = items.map(item => ({
     price_data: {
       currency: 'usd',
@@ -56,3 +56,5 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+setInterval(() => console.log('Hello'), 5000);
