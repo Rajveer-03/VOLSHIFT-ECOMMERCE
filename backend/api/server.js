@@ -49,8 +49,7 @@ app.post('/api/stripe-checkout', async (req, res) => {
 
     res.status(200).json({ url: session.url });
   } catch (error) {
-    console.error('Stripe Checkout error:', error);
-    res.status(500).json({ error: error });
+    res.status(500).json({ error: error.message });
   }
 });
 
