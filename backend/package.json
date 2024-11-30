@@ -2,6 +2,7 @@
     "name": "vercel-server",
     "version": "1.0.0",
     "main": "api/server.js",
+    "type": "module",
     "dependencies": {
       "cors": "^2.8.5",
       "dotenv": "^16.4.5",
