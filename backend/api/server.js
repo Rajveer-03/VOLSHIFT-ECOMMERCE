@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 // Example route for stripe checkout
 app.post('/api/stripe-checkout', async (req, res) => {
   const { items } = req.body;
-
+  console.log("Hello");
   const lineItems = items.map(item => ({
     price_data: {
       currency: 'usd',
