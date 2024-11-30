@@ -9,9 +9,6 @@ const stripe = Stripe(process.env.STRIPE_API);
 
 const app = express();
 
-// Middleware to parse JSON
-const cors = require('cors');
-
 // Allow all origins
 app.use(cors());
 app.use(express.json());
