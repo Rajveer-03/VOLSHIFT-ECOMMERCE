@@ -39,8 +39,8 @@ app.post('/api/stripe-checkout', async (req, res) => {
       payment_method_types: ['card'],
       line_items: lineItems,
       mode: 'payment',
-      success_url: `${process.env.BASE_URL}/success.html`,
-      cancel_url: `${process.env.BASE_URL}/cancel.html`,
+      success_url: `https://volshift-ecommerce-ten.vercel.app/`,
+      cancel_url: `https://volshift-ecommerce-ten.vercel.app/`,
       billing_address_collection: 'required',
     });
 
