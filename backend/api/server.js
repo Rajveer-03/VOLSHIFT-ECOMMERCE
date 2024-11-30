@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
 app.post('/api/stripe-checkout', async (req, res) => {
   console.log("Hello");
   const { items } = req.body;
-  console.log(+req);
+  console.log(req);
   console.log("differentiator");
   console.log(items);
   const lineItems = items.map(item => ({

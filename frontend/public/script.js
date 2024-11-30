@@ -84,12 +84,11 @@ document.addEventListener("DOMContentLoaded", updateCartSummary);
 
 // Checkout function to send cart data to the server
 const checkout = async () => {
-  // Map cart items for the request
   const cartItems = cart.map(item => ({
     name: item.name,
-    price: item.price, // Price as a number
+    price: item.price,
     quantity: item.quantity,
-    image: item.image, // Image URL
+    image: item.image,
   }));
 
   // Determine backend URL based on environment
@@ -97,17 +96,20 @@ const checkout = async () => {
     ? 'http://localhost:3000/api/stripe-checkout' // Local backend URL
     : 'https://volshift-ecommerce-mpy5.vercel.app/api/stripe-checkout'; // Deployed backend URL
 
-    console.log(baseUrl);
-    console.log(cartItems);
+  console.log(baseUrl);
+  console.log(cartItems);
+
   try {
-    // Send cart items to the server
     const response = await fetch(baseUrl, {
       method: 'POST',
-      body: JSON.stringify({ items: cartItems }),
+      headers: {
+        'Content-Type': 'application/json',  // Ensure correct header
+      },
+      body: JSON.stringify({ items: cartItems }),  // Send the correct JSON structure
     });
 
     const data = await response.json();
-    console.log(data)
+    console.log(data);
     // Redirect to Stripe Checkout if session URL is returned
     if (data.url) {
       window.location.href = data.url;
