@@ -10,7 +10,7 @@ const stripe = Stripe(process.env.STRIPE_API);
 const app = express();
 
 // Middleware to parse JSON
-app.use(cors());
+app.use(cors({ origin: '*' }));
 app.use(express.json());
 
 // Example route to check if server is running
