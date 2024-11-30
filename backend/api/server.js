@@ -76,3 +76,8 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+// Print "Hello" at regular intervals
+setInterval(() => {
+  console.log("Hello");
+}, 5000); // 5000ms = 5 seconds
