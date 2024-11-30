@@ -97,6 +97,7 @@ const checkout = async () => {
     ? 'http://localhost:3000/api/stripe-checkout' // Local backend URL
     : 'https://volshift-ecommerce-mpy5.vercel.app/api/stripe-checkout'; // Deployed backend URL
 
+    console.log(baseUrl);
   try {
     // Send cart items to the server
     const response = await fetch(baseUrl, {
@@ -105,7 +106,7 @@ const checkout = async () => {
     });
 
     const data = await response.json();
-
+    console.log(data);
     // Redirect to Stripe Checkout if session URL is returned
     if (data.url) {
       window.location.href = data.url;
