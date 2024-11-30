@@ -101,12 +101,12 @@ const checkout = async () => {
   try {
     // Send cart items to the server
     const response = await fetch(baseUrl, {
-      method: 'POST',
+      method: 'GET',
       body: JSON.stringify({ items: cartItems }),
     });
 
     const data = await response.json();
-    console.log(data);
+    console.log(data)
     // Redirect to Stripe Checkout if session URL is returned
     if (data.url) {
       window.location.href = data.url;
